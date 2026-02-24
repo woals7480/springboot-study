@@ -1,5 +1,8 @@
 package com.jaemin.springbootstudy.user;
 
+import com.jaemin.springbootstudy.user.dto.CreateUserRequest;
+import com.jaemin.springbootstudy.user.dto.UpdateUserRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +14,8 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    // DTO (간단하게 내부 클래스로)
-    public record CreateUserRequest(String email, String name) {}
-    public record UpdateUserRequest(String email, String name) {}
-
     @PostMapping
-    public User create(@RequestBody CreateUserRequest req) {
+    public User create(@Valid @RequestBody CreateUserRequest req) {
         return userService.create(req.email(), req.name());
     }
 
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody UpdateUserRequest req){
+    public User update(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest req){
         return userService.update(id, req.email(), req.name());
     }
 

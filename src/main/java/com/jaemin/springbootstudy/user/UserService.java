@@ -1,19 +1,17 @@
 package com.jaemin.springbootstudy.user;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User create(String email, String name) {
         if (userRepository.existsByEmail(email)) {
@@ -35,7 +33,7 @@ public class UserService {
 
     public User update(Long id, String email, String name) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));;
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
 
         if (!user.getEmail().equals(email) && userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already exists: " + email);

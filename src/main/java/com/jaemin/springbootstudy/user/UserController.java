@@ -1,17 +1,15 @@
 package com.jaemin.springbootstudy.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     // DTO (간단하게 내부 클래스로)
     public record CreateUserRequest(String email, String name) {}
